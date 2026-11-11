@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920"><!-- Side-illustration anchor: half circle hugging the left edge with a thin ring; fill with cloth/blue glow; text on the right. -->
+<defs><radialGradient id="h" cx="0" cy="0.5" r="0.9"><stop offset="0" stop-color="#1E6AF1" stop-opacity=".85"/><stop offset="1" stop-color="#1E6AF1" stop-opacity="0"/></radialGradient></defs>
+<path d="M0 640 A 320 320 0 0 1 0 1280 Z" fill="url(#h)"/><path d="M0 600 A 360 360 0 0 1 0 1320" fill="none" stroke="#5b6478" stroke-width="2"/><circle cx="360" cy="960" r="12" fill="#1E6AF1"/></svg>

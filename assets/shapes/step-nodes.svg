@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"><!-- Step-1 / Step-2 nodes (Playfair Display Italic labels). Pop node 1, then node 2, settle side by side (11 f, power2.out). -->
+<g fill="#2F6BF2"><circle cx="410" cy="560" r="95"/><circle cx="670" cy="560" r="95"/></g>
+<g fill="#fff" font-family="Playfair Display, serif" font-style="italic" font-weight="700" font-size="44" text-anchor="middle"><text x="410" y="575">Step-1</text><text x="670" y="575">Step-2</text></g>
+<g fill="none" stroke="#1a1a2e" stroke-width="2"><path d="M410 465 Q395 400 440 360" /><path d="M670 655 Q690 720 650 760"/></g></svg>

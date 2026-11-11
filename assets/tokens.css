@@ -1,0 +1,123 @@
+/* arthurcbrooks: design tokens and building blocks for the clean, premium, minimal educational reel style.
+   Canvas 1080×1920 @ 30 fps. All values are measured from the 6 reference reels (see references/design-system.md).
+   Paths are relative to assets/ (tokens.css lives in assets/). Copy assets/ next to your composition, or adjust url()s. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+  /* ---- colour ---- */
+  --ab-blue: #0844EA;          /* signature blue paper (median of all reels) */
+  --ab-blue-v01: #2150F1;      /* per-reel variants: pick ONE per video */
+  --ab-blue-v02: #1A6AF4;
+  --ab-blue-v03: #072EE6;
+  --ab-blue-v04: #0C3EDB;
+  --ab-blue-v06: #107DF3;
+  --ab-blue-node: #2F6BF2;     /* diagram nodes, highlight pills */
+  --ab-azure: #1E6AF1;         /* glowing lines on black, orbit dots */
+  --ab-white: #FBF9FC;         /* white paper */
+  --ab-white-rough: #ECE9E5;   /* rough/speckled white paper */
+  --ab-black: #000402;         /* black paper */
+  --ab-navy: #0B0C10;          /* graph / dark diagram background */
+  --ab-yellow: #F9DB59;        /* accent wash, use sparingly */
+  --ab-ink: #1A1A2E;           /* dark text on white (helpers, arrows) */
+  --ab-grey: #5B6478;          /* timeline labels, captions on white */
+  --ab-line-grey: #9AA3B8;     /* thin construction lines, Venn rings */
+  --ab-red: #C8102E;           /* rare emphasis (heart, danger brain) */
+  --ab-cyan: #3FF3FF;          /* 1-frame flash / negative tint accent */
+
+  /* ---- type ---- */
+  --ab-serif: 'Playfair Display', 'Didot', Georgia, serif;
+  --ab-sans: 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+  --ab-key-size: 120px;                         /* key word font size @1080 wide (box ≈130–160 px) */
+  --ab-helper-ratio: 0.33;                      /* helpers = 1/3 of key height (IQR 0.27–0.40) */
+  --ab-helper-size: calc(var(--ab-key-size) * var(--ab-helper-ratio));
+  --ab-subtitle-size: 40px;                     /* low-emphasis subtitle line */
+  --ab-key-track: -0.03em;
+  --ab-helper-track: -0.01em;
+
+  /* ---- layout ---- */
+  --ab-margin-x: 80px;
+  --ab-y-center: 50%;     /* B-roll, text cards, end cards */
+  --ab-y-aroll: 53%;      /* talking head: chest / mic height */
+  --ab-y-upper: 30%;      /* over an illustration or diagram in the lower half */
+  --ab-y-inset-text: 39%; /* text above a B-roll inset */
+
+  /* ---- motion ---- */
+  --ab-fps: 30;
+  --ab-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);     /* = GSAP power2.out (sine/quad-out) */
+  --ab-ease-in: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* slide-out transitions only */
+  --ab-ghost-on-blue: 0.15;
+  --ab-ghost-on-white: 0.10;
+}
+
+/* ---------- canvas & backgrounds ---------- */
+.ab-canvas { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--ab-black); }
+.ab-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.ab-paper-blue        { background: var(--ab-blue) url(textures/paper-blue.jpg) center / cover; }
+.ab-paper-blue-rough  { background: var(--ab-blue) url(textures/paper-blue-rough.jpg) center / cover; }
+.ab-paper-white       { background: var(--ab-white) url(textures/paper-white.jpg) center / cover; }
+.ab-paper-white-rough { background: var(--ab-white-rough) url(textures/paper-white-rough.jpg) center / cover; }
+.ab-paper-black       { background: var(--ab-black) url(textures/paper-black.jpg) center / cover; }
+.ab-paper-yellow      { background: var(--ab-yellow) url(textures/paper-yellow-rough.jpg) center / cover; }
+.ab-glow  { position: absolute; inset: 0; background: url(textures/glow-blue.png) center / cover; pointer-events: none; }
+.ab-vignette { position: absolute; inset: 0; background: url(textures/vignette.png) center / cover; pointer-events: none; }
+.ab-grain { position: absolute; inset: 0; background: url(textures/grain-tile-512.png) repeat; mix-blend-mode: overlay; opacity: .35; pointer-events: none; }
+
+/* B-roll treatment: desaturate, darken edges, slight edge blur, grain (stack .ab-vignette + .ab-grain on top) */
+.ab-broll { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.7) contrast(1.04) brightness(.95); }
+.ab-broll-edgeblur { position: absolute; inset: 0; backdrop-filter: blur(6px);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 55%, #000 100%);
+          mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 55%, #000 100%); pointer-events: none; }
+.ab-archival { filter: grayscale(1) contrast(1.1); }
+
+/* ---------- cinematic text ---------- */
+/* A line = one .ab-lockup (key word) with helpers pinned around it. Every word is pre-placed at opacity 0. */
+.ab-cine { position: absolute; left: var(--ab-margin-x); right: var(--ab-margin-x); top: var(--ab-y-center);
+  transform: translateY(-50%); text-align: center; color: #fff; }
+.ab-cine.is-aroll { top: var(--ab-y-aroll); }
+.ab-cine.is-upper { top: var(--ab-y-upper); }
+.ab-cine.on-white { color: var(--ab-blue); }
+.ab-cine.on-white .ab-helper { color: var(--ab-ink); }
+.ab-cine.on-white.blue-helpers .ab-helper { color: var(--ab-blue); }
+
+.ab-lockup { position: relative; display: inline-block; line-height: .86; }
+.ab-key { display: inline-block; font-size: var(--ab-key-size); letter-spacing: var(--ab-key-track); white-space: nowrap; }
+.ab-key--serif { font-family: var(--ab-serif); font-style: italic; font-weight: 700; }
+.ab-key--serif-roman { font-family: var(--ab-serif); font-style: normal; font-weight: 500; letter-spacing: -0.02em; }
+.ab-key--bold { font-family: var(--ab-sans); font-weight: 800; }
+
+.ab-helper { font-family: var(--ab-sans); font-weight: 500; font-size: var(--ab-helper-size);
+  letter-spacing: var(--ab-helper-track); line-height: 1; white-space: nowrap; }
+/* helper slots, tucked tight against the key word (they nearly touch ascenders/descenders) */
+.ab-tl { position: absolute; left: 4%;  bottom: 100%; transform: translateY(32%); }
+.ab-tr { position: absolute; right: 2%; bottom: 100%; transform: translateY(32%); }
+.ab-tc { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, 30%); }
+.ab-bl { position: absolute; left: 4%;  top: 100%;    transform: translateY(-18%); }
+.ab-br { position: absolute; right: 2%; top: 100%;    transform: translateY(-18%); }
+.ab-bc { position: absolute; left: 50%; top: 100%;    transform: translate(-50%, -18%); }
+
+.ab-subtitle { font-family: var(--ab-sans); font-weight: 500; font-size: var(--ab-subtitle-size); letter-spacing: -0.01em; }
+.ab-subtitle b { font-weight: 800; }
+.ab-quote::before { content: '\201C'; } .ab-quote::after { content: '\201D'; }
+.ab-quote::before, .ab-quote::after { font-family: var(--ab-serif); font-style: italic; font-weight: 700; }
+
+/* word states: pre-placed, popped on the voice (1–2 frame opacity step) */
+.ab-word { opacity: 0; }
+.ab-word.is-on { opacity: 1; }
+.ab-ghost .ab-word { opacity: var(--ab-ghost-on-blue); }
+.ab-cine.on-white.ab-ghost .ab-word { opacity: var(--ab-ghost-on-white); }
+
+/* highlight pill behind a quoted caption line (talking head) */
+.ab-highlight { display: inline-block; background: var(--ab-blue-node); border-radius: 18px; padding: .18em .5em; }
+
+/* ---------- framing elements ---------- */
+.ab-inset { position: absolute; left: 7.5%; width: 85%; top: 42%; aspect-ratio: 3 / 2; border-radius: 22px; overflow: hidden; }
+.ab-inset.is-tall { left: 18%; width: 64%; top: 22%; aspect-ratio: 9 / 14; }
+.ab-photo { position: absolute; background: #fff; padding: 10px; box-shadow: 0 18px 42px rgba(0,0,0,.28); }
+.ab-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ab-doc { position: absolute; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,.25); clip-path: polygon(0 0,100% 0,100% 88%,86% 100%,0 100%); }
+.ab-line { fill: none; stroke: var(--ab-blue); stroke-width: 80; }
+.ab-thin { fill: none; stroke: var(--ab-blue); stroke-width: 2; }
+.ab-label { font-family: var(--ab-sans); font-weight: 600; font-size: 30px; color: var(--ab-blue); }
+.ab-label-italic { font-family: var(--ab-serif); font-style: italic; font-weight: 700; font-size: 40px; color: var(--ab-ink); }
+.ab-tag { display: inline-block; background: var(--ab-blue-node); color: #fff; font: 700 22px var(--ab-sans); padding: 4px 10px; letter-spacing: .04em; }

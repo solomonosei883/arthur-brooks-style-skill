@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"><!-- Two glowing blue rings (attachment-style comparison). Pop one, then the other, then slide them to overlap. -->
+<defs><radialGradient id="r"><stop offset="0.38" stop-color="#fff"/><stop offset="0.45" stop-color="#1E6AF1"/><stop offset="0.75" stop-color="#0844EA"/><stop offset="1" stop-color="#0844EA" stop-opacity="0"/></radialGradient></defs>
+<circle cx="400" cy="560" r="150" fill="url(#r)"/><circle cx="680" cy="500" r="150" fill="url(#r)"/></svg>

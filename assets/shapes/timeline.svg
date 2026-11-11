@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2160 300"><!-- Thin timeline wider than the frame; slide it left (power2.inOut) so the current tick sits at centre. Year labels Inter 22 px, captions Inter 14 px caps. -->
+<line x1="0" y1="150" x2="2160" y2="150" stroke="#9aa3b8" stroke-width="2"/>
+<g stroke="#9aa3b8" stroke-width="2"><line x1="270" y1="138" x2="270" y2="162"/><line x1="810" y1="138" x2="810" y2="162"/><line x1="1350" y1="138" x2="1350" y2="162"/><line x1="1890" y1="138" x2="1890" y2="162"/></g>
+<rect x="770" y="144" width="80" height="12" fill="#0844EA"/>
+<g font-family="Inter, sans-serif" font-size="22" fill="#5b6478" text-anchor="middle"><text x="270" y="200">8 YEARS</text><text x="810" y="200">19 YEARS</text><text x="1350" y="200">24 YEARS</text><text x="1890" y="200">30 YEARS</text></g></svg>

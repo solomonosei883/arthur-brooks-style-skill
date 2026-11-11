@@ -1,0 +1,2 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920"><!-- B-roll inset mask: rounded rect ≈82% width centred on black; text sits above (y≈0.39). Use as clip-path / mask. -->
+<rect width="1080" height="1920" fill="#000"/><rect x="95" y="800" width="890" height="600" rx="22" fill="#fff"/></svg>

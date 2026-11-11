@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"><!-- Three thin circles; the shared centre fills solid blue last. Label stems from each circle. -->
+<g fill="none" stroke="#9aa3b8" stroke-width="2"><circle cx="540" cy="420" r="190"/><circle cx="430" cy="610" r="190"/><circle cx="650" cy="610" r="190"/></g>
+<path d="M540 486 Q600 545 595 610 Q540 640 485 610 Q480 545 540 486Z" fill="#0844EA"/>
+<g stroke="#9aa3b8" stroke-width="2"><line x1="540" y1="230" x2="540" y2="150"/><line x1="300" y1="740" x2="230" y2="820"/><line x1="780" y1="740" x2="850" y2="820"/></g></svg>

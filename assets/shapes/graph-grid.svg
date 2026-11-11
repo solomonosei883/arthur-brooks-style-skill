@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920"><!-- Graph scene: flat dark textured bg, thin glowing white grid, white trace with a blue ball at the head (camera follows the ball). -->
+<defs><filter id="gl"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="ball"><stop offset="0" stop-color="#7FB0FF"/><stop offset=".5" stop-color="#1E6AF1"/><stop offset="1" stop-color="#1E6AF1" stop-opacity="0"/></radialGradient></defs>
+<rect width="1080" height="1920" fill="#0b0c10"/>
+<g stroke="#ffffff" stroke-opacity=".16" stroke-width="2"><line x1="0" y1="560" x2="1080" y2="560"/><line x1="0" y1="800" x2="1080" y2="800"/><line x1="0" y1="1040" x2="1080" y2="1040"/><line x1="0" y1="1280" x2="1080" y2="1280"/><line x1="0" y1="1520" x2="1080" y2="1520"/></g>
+<path d="M120 1700 L 560 900" stroke="#fff" stroke-width="5" filter="url(#gl)" pathLength="1000"/><circle cx="560" cy="900" r="40" fill="url(#ball)"/></svg>

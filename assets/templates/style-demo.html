@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Style Demo</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  html,body{margin:0;height:100%;background:#15161a;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,sans-serif}
+  #stage{position:relative;width:1080px;height:1920px;transform-origin:center;flex:none}
+  .scene{position:absolute;inset:0;opacity:0}
+  #ui{position:fixed;left:16px;bottom:16px;color:#cfd3dc;font-size:13px}
+  #ui button{background:#2F6BF2;color:#fff;border:0;border-radius:6px;padding:6px 12px;font:600 13px Inter,sans-serif;cursor:pointer}
+  .fakebroll{position:absolute;inset:0;background:radial-gradient(60% 45% at 50% 55%,#6b5a46 0%,#2a2119 60%,#0d0a08 100%)}
+  .figure{position:absolute;left:330px;top:1080px;width:420px;height:760px;border-radius:210px 210px 40px 40px;background:var(--ab-blue);filter:url(#rough)}
+</style>
+</head>
+<body>
+<!-- Original placeholder wording only. Each scene follows the measured rules: pre-placed words, pop at onset+3 f, cut on onset−1 f, power2.out moves. -->
+<svg width="0" height="0" style="position:absolute"><filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18"/></filter></svg>
+<div id="stage" class="ab-canvas">
+  <!-- 1. B-roll + cinematic text: helpers first, serif key word drops into the gap -->
+  <section class="scene" id="s1">
+    <div class="fakebroll"></div><div class="ab-vignette"></div><div class="ab-grain"></div>
+    <div class="ab-cine"><span class="ab-lockup"><span class="ab-helper ab-tl ab-word">the one</span><span class="ab-helper ab-tr ab-word">we all</span><span class="ab-key ab-key--serif ab-word">habit</span><span class="ab-helper ab-br ab-word">ignore</span></span></div>
+  </section>
+  <!-- 2. Text-centric ghost line on blue paper -->
+  <section class="scene" id="s2">
+    <div class="ab-bg ab-paper-blue"></div>
+    <div class="ab-cine ab-ghost"><span class="ab-lockup"><span class="ab-helper ab-tc ab-word">it starts</span><span class="ab-key ab-key--bold ab-word">small.</span></span></div>
+  </section>
+  <!-- 3. Line + text on white paper -->
+  <section class="scene" id="s3">
+    <div class="ab-bg ab-paper-white"></div>
+    <svg viewBox="0 0 1080 1920" style="position:absolute;inset:0"><path id="arc" class="ab-line" d="M -40 380 C 260 330 470 420 520 790" pathLength="1000"/></svg>
+    <div class="ab-cine on-white"><span class="ab-lockup"><span class="ab-helper ab-tl ab-word">then it</span><span class="ab-key ab-key--serif ab-word">compounds</span></span></div>
+  </section>
+  <!-- 4. Center illustration + orbit labels -->
+  <section class="scene" id="s4">
+    <div class="ab-bg ab-paper-white"></div><div class="ab-glow" style="top:-200px"></div>
+    <div class="figure"></div>
+    <div class="ab-cine on-white is-upper"><span class="ab-lockup"><span class="ab-helper ab-tl ab-word">three</span><span class="ab-key ab-key--serif ab-word">choices</span></span></div>
+    <svg viewBox="0 0 1080 1920" style="position:absolute;inset:0"><circle id="ring" class="ab-thin" cx="540" cy="1220" r="380" pathLength="1000"/></svg>
+    <div class="ab-label ab-word" id="l1" style="position:absolute;left:470px;top:800px">rest</div>
+    <div class="ab-label ab-word" id="l2" style="position:absolute;left:90px;top:1200px">move</div>
+    <div class="ab-label ab-word" id="l3" style="position:absolute;left:880px;top:1200px">connect</div>
+  </section>
+  <!-- 5. Quote card on rough blue -->
+  <section class="scene" id="s5">
+    <div class="ab-bg ab-paper-blue-rough"></div>
+    <div class="ab-cine"><span class="ab-lockup ab-quote"><span class="ab-helper ab-tl ab-word">start with</span><span class="ab-key ab-key--serif ab-word">one</span><span class="ab-helper ab-br ab-word">today.</span></span></div>
+  </section>
+</div>
+<div id="ui"><button id="play">Replay</button> 1080×1920 · 30 fps · placeholder wording</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="../ab-timing.js"></script>
+<script>
+  const stage=document.getElementById('stage');
+  function fit(){const s=Math.min(innerWidth/1080,(innerHeight-40)/1920);stage.style.transform=`scale(${s})`;}
+  addEventListener('resize',fit);fit();
+  const q=(sel,root=document)=>[...root.querySelectorAll(sel)];
+  // fake word onsets (seconds) for each scene: what a transcript would give you
+  const S=[{id:'s1',at:0,on:[0.35,0.62,1.05,1.45]},{id:'s2',at:2.2,on:[2.45,2.9]},{id:'s3',at:3.9,on:[4.15,4.75]},
+           {id:'s4',at:5.9,on:[6.15,6.5,7.1,7.6,8.1]},{id:'s5',at:9.0,on:[9.25,9.7,10.1]}];
+  function build(){
+    const tl=gsap.timeline({paused:true});
+    S.forEach((s,i)=>{
+      const el=document.getElementById(s.id), next=S[i+1], cut=AB.cutTime(s.at+AB.f(1)), out=next?AB.cutTime(next.at+AB.f(1)):11.5;
+      tl.set(el,{opacity:1},cut).set(el,{opacity:0},out);                 // hard cuts in and out
+      const words=q('.ab-word',el);
+      if(el.querySelector('.ab-ghost')) AB.ghostLine(tl,words,s.on,{kind:'card',sceneStart:cut,at:cut});
+      else AB.popWords(tl,words,s.on,{kind:'broll',sceneStart:cut});
+    });
+    AB.kenBurns(tl,q('#s1 .fakebroll')[0],0,2.2,0.012);
+    AB.drawLine(tl,document.getElementById('arc'),3.9,15);
+    AB.enter(tl,q('#s4 .figure')[0],{y:220,scale:.9,opacity:0},5.9,20);
+    AB.drawLine(tl,document.getElementById('ring'),6.6,20);
+    return tl;
+  }
+  let tl=build(); tl.play(0);
+  document.getElementById('play').onclick=()=>{q('.ab-word').forEach(w=>w.style.opacity='');tl.kill();tl=build();tl.play(0);};
+</script>
+</body>
+</html>

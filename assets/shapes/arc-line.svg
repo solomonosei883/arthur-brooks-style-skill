@@ -1,0 +1,2 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920"><!-- Thick accent-blue sweeping arc (≈80 px @1080). Animate stroke-dashoffset from pathLength to 0, power2.out. Text sits where the line stops. -->
+<path d="M -40 380 C 260 330 470 420 520 760" fill="none" stroke="#0844EA" stroke-width="80" stroke-linecap="butt" pathLength="1000"/></svg>
